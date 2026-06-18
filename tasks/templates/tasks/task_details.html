@@ -1,0 +1,43 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+
+<h1>{{ task.title }}</h1>
+
+<p>
+    <strong>Description:</strong>
+    {{ task.description }}
+</p>
+
+<p>
+    <strong>Status:</strong>
+    {{ task.status }}
+</p>
+
+<p>
+    <strong>Due Date:</strong>
+    {{ task.due_date }}
+</p>
+
+{% if task.image %}
+    <img src="{{ task.image.url }}" width="300">
+{% endif %}
+
+<br><br>
+
+
+<a class="edit-btn" href="{% url 'task_update' task.id %}">
+    Edit
+</a>
+
+<a class="cancel-btn" href="{% url 'task_delete' task.id %}">
+    Delete
+</a>
+
+<a class="back-btn" href="{% url 'task_list' %}">
+    Back
+</a>
+
+
+{% endblock %}
+ 

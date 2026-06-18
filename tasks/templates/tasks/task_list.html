@@ -1,0 +1,77 @@
+{% extends 'tasks/base.html' %}
+
+{% block content %}
+
+<h1>My Tasks</h1>
+
+<form method="GET">
+
+    <input
+        type="text"
+        name="q"
+        placeholder="Search Tasks..."
+    >
+
+    <button type="submit">
+        Search
+    </button>
+
+</form>
+
+<hr>
+
+{% for task in tasks %}
+
+<div>
+
+    <h3 class="task-title">
+        <a href="{% url 'task_detail' task.id %}">
+            {{ task.title }}
+        </a>
+    </h3>
+    {% if task.image %}
+    <img src="{{ task.image.url }}" width="150">
+    {% endif %}
+
+    <p>{{ task.description }}</p>
+
+    <p>Status: {{ task.status }}</p>
+
+    <p>Due: {{ task.due_date }}</p>
+    <a class="edit-btn"  href="{% url 'task_update' task.id %}">
+    Edit
+</a>
+<a class="delete-btn"  href="{% url 'task_delete' task.id %}">
+    Delete
+</a>
+
+</div>
+
+<hr>
+
+{% empty %}
+
+<p>No Tasks Found</p>
+
+{% endfor %}
+{% if tasks.has_previous %}
+
+<a href="?page={{ tasks.previous_page_number }}">
+Previous
+</a>
+
+{% endif %}
+
+<span>
+Page {{ tasks.number }} of {{ tasks.paginator.num_pages }}
+</span>
+
+{% if tasks.has_next %}
+
+<a href="?page={{ tasks.next_page_number }}">
+Next
+</a>
+
+{% endif %}
+
+{% endblock %}
